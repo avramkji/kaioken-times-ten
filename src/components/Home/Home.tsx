@@ -1,7 +1,7 @@
 import { useState, useEffect } from "kaioken"
 import "./Home.css"
 
-function Home() {
+export function Home() {
   const [name, setName] = useState('');
   const [enter, setEnter] = useState(false);
   const [messages, setMessages] = useState([
@@ -11,23 +11,15 @@ function Home() {
   ]);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (enter) {
-      console.log('enter pressed')
-    }
-  }, [enter]);
-
   if (!enter) {
     return (
       <div className="h-full">
           <input
             className="border-blue-500 px-1 mx-1"
-            placeholder="Enter your name"
+            placeholder="Enter name"
             type="text"
             value={name}
             onkeydown={(e: any) => {
-              // console.log('E key: ', e)
-              // console.log('E value: ', e.target.value)
               if (e.key === 'Enter') {
                 setEnter(true);
                 setName(e.target.value);
@@ -56,31 +48,29 @@ function Home() {
         })}
         </div>
         <div className="h-full">
-          <input
-            className="border-blue-500 px-1 mx-1"
-            placeholder="Enter your name"
-            type="text"
-            value={message}
-            onkeypress={(e: any) => {
-              if (e.key === 'Enter') {
-                setMessages([...messages, { name: name, message: message }])
-                setMessage('')
-              }
-              setMessage(e.target.value)
-            }}            
-          />
-          <button 
-            onclick={() => {
+          <form
+            onsubmit={(e: any) => {
+              e.preventDefault();
               setMessages([...messages, { name: name, message: message }])
               setMessage('')
             }}
-            className="px-2 bg-blue-500 text-white mx-1"
-          >Enter</button>
+          >
+            <input
+              className="border-blue-500 px-1 mx-1"
+              placeholder="Enter your message"
+              type="text"
+              value={message}
+              oninput={(e: any) => {
+                setMessage(e.target.value)
+              }}     
+            />
+            <button
+              className="px-2 bg-blue-500 text-white mx-1"
+            >Enter</button>
+          </form>
         </div>
       </div>
     );
   }
 
 }
-
-export default Home

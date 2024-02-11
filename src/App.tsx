@@ -1,5 +1,5 @@
 import { Router, Route, Link, useState } from "kaioken"
-import Home from "./components/Home/Home"
+import { Home } from "./components/Home/Home"
 
 export function App() {
   return (
